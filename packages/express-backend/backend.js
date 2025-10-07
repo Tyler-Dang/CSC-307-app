@@ -2,6 +2,36 @@
 import express from "express";
 import cors from "cors";
 
+const users = {
+  users_list: [
+    {
+      id: "xyz789",
+      name: "Charlie",
+      job: "Janitor"
+    },
+    {
+      id: "abc123",
+      name: "Mac",
+      job: "Bouncer"
+    },
+    {
+      id: "ppp222",
+      name: "Mac",
+      job: "Professor"
+    },
+    {
+      id: "yat999",
+      name: "Dee",
+      job: "Aspring actress"
+    },
+    {
+      id: "zap555",
+      name: "Dennis",
+      job: "Bartender"
+    }
+  ]
+};
+
 const app = express();
 const port = 8000;
 
@@ -75,7 +105,7 @@ const deleteUser = (id) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   const newUser = addUser(userToAdd);
-  res.status(201).send();
+  res.status(201).send(newUser);
 });
 
 app.delete("/users/:id", (req, res) => {
