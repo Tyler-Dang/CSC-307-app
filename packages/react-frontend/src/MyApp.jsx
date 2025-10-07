@@ -7,11 +7,27 @@ function MyApp() {
   const [characters, setCharacters] = useState([]);
 
   function removeOneCharacter(index) {
-      const updated = characters.filter((character, i) => {
-        return i !== index;
-      });
-      setCharacters(updated);
+    const userToDelete = characters[index];
+    if (!userToDelete) {
+      console.log("User not found at index", index);
+      return;
     }
+
+    deleteUser(userToDelete.id)
+      .then((res) => {
+        if (res.status === 204) {
+          const updated = characters.filter((character, i) => {
+            return i !== index;
+          });
+          setCharacters(updated);
+        } else if (res.status === 404) {
+          console.log("User not found in backend");
+        }
+      })
+      .catch((error) => {
+        console.log("Error deleting user:", error);
+      });
+  }
 
   function fetchUsers() {
     const promise = fetch("http://localhost:8000/users");
@@ -25,6 +41,14 @@ function MyApp() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(person),
+    });
+
+    return promise;
+  }
+
+  function deleteUser(id) {
+    const promise = fetch(`http://localhost:8000/users/${id}`, {
+      method: "DELETE",
     });
 
     return promise;

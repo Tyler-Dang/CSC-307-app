@@ -84,7 +84,7 @@ app.get("/users/:id", (req, res) => {
 });
 
 const generateId = () => {
-  return Math.random()
+  return Math.random().toString()
 }
 
 const addUser = (user) => {
