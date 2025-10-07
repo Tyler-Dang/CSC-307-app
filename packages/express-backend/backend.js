@@ -99,8 +99,8 @@ const deleteUser = (id) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  addUser(userToAdd);
-  res.send();
+  const newUser = addUser(userToAdd);
+  res.status(201).send();
 });
 
 app.delete("/users/:id", (req, res) => {
@@ -109,7 +109,7 @@ app.delete("/users/:id", (req, res) => {
   if (deletedUser === undefined) {
     res.status(404).send("Resource not found.");
   } else {
-    res.status(204).send(); // 204 No Content - successful deletion
+    res.status(204).send();
   }
 });
 
