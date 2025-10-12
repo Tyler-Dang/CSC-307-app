@@ -13,7 +13,7 @@ function MyApp() {
       return;
     }
 
-    deleteUser(userToDelete.id)
+    deleteUser(userToDelete._id)
       .then((res) => {
         if (res.status === 204) {
           const updated = characters.filter((character, i) => {
@@ -29,9 +29,13 @@ function MyApp() {
       });
   }
 
-  function fetchUsers() {
-    const promise = fetch("http://localhost:8000/users");
-    return promise;
+  function fetchUsers(name, job) {
+    let url = "http://localhost:8000/users";
+    const params = new URLSearchParams();
+    if (name) params.append('name', name);
+    if (job) params.append('job', job);
+    if (params.toString()) url += '?' + params.toString();
+    return fetch(url);
   }
 
   function postUser(person) {
@@ -69,6 +73,13 @@ function MyApp() {
       })
   }
 
+  function handleSearch(searchData) {
+    fetchUsers(searchData.name, searchData.job)
+      .then((res) => res.json())
+      .then((json) => setCharacters(json["users_list"]))
+      .catch((error) => { console.log(error); });
+  }
+
   useEffect(() => {
     fetchUsers()
       .then((res) => res.json())
@@ -82,7 +93,7 @@ function MyApp() {
         characterData={characters}
         removeCharacter={removeOneCharacter}
       />
-      <Form handleSubmit={updateList} />
+      <Form handleSubmit={updateList} handleSearch={handleSearch} />
     </div>
   );
 }

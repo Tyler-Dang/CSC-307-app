@@ -19,6 +19,10 @@ function Form(props) {
     setPerson({ name: "", job: "" });
   }
 
+  function searchForm() {
+    props.handleSearch(person);
+  }
+
   return (
     <form>
         <label htmlFor="name">Name</label>
@@ -38,6 +42,7 @@ function Form(props) {
         onChange={handleChange}
         />
         <input type="button" value="Submit" onClick={submitForm} />
+        <input type="button" value="Search" onClick={searchForm} style={{marginLeft: '10px'}} />
     </form>
     
   );
