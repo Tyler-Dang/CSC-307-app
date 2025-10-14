@@ -4,7 +4,7 @@ import userModel from "./user.js";
 mongoose.set("debug", true);
 
 mongoose
-  .connect("mongodb://localhost:27017/users", {
+  .connect("mongodb+srv://waztec1128_db_user:kkldSkBQ6ClfT15x@assignment1.jwdm4xf.mongodb.net/?retryWrites=true&w=majority&appName=Assignment1", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
